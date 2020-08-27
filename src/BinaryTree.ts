@@ -31,8 +31,7 @@ export class BinaryTree<TKey = string, TItem = {}> {
     let parent;
     while (true) {
       parent = current;
-      const newNodeIsless =
-        this.compareFn(newNode.key, current.key) < 0;
+      const newNodeIsless = this.compareFn(newNode.key, current.key) < 0;
       if (newNodeIsless) {
         current = current.leftChild;
         if (!current) {
