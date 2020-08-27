@@ -1,33 +1,25 @@
-export enum ECompareResult {
-  /** first argument more second argument */
-  MORE,
-  /** first argument less second argument */
-  LESS,
-  /** first argument equal second argument */
-  EQUAL,
-}
-
-export type TCompareFunction<TItem> = (a: TItem, b: TItem) => ECompareResult;
-
 class Node<TItem, TKey> {
   public leftChild!: Node<TItem, TKey>;
   public rightChild!: Node<TItem, TKey>;
-  constructor(public readonly key: TKey, public readonly data: TItem) {}
+  constructor(public readonly key: TKey, public readonly data?: TItem) {}
 }
 
-export class BinaryTree<TItem, TKey> {
+export type TCompareFunction<TItem> = (a: TItem, b: TItem) => number;
+
+const DEFAULT_COMPARE_FUNCION = (a: any, b: any) => a - b;
+
+export class BinaryTree<TKey = string, TItem = {}> {
   private _root!: Node<TItem, TKey>;
 
   constructor(
-    private readonly compareFn: TCompareFunction<TKey> = () =>
-      ECompareResult.EQUAL
+    private readonly compareFn: TCompareFunction<TKey> = DEFAULT_COMPARE_FUNCION
   ) {}
 
   get root() {
-    return this._root;    
+    return this._root;
   }
 
-  insert(key: TKey, data: TItem): void {
+  insert(key: TKey, data?: TItem): void {
     const newNode = new Node(key, data);
     if (!this._root) {
       this._root = newNode;
@@ -40,7 +32,7 @@ export class BinaryTree<TItem, TKey> {
     while (true) {
       parent = current;
       const newNodeIsless =
-        this.compareFn(newNode.key, current.key) === ECompareResult.LESS;
+        this.compareFn(newNode.key, current.key) < 0;
       if (newNodeIsless) {
         current = current.leftChild;
         if (!current) {
@@ -56,13 +48,12 @@ export class BinaryTree<TItem, TKey> {
       }
     }
   }
-
 }
 
 // class BinaryTreeIteratorInOrder<TKey, TItem> {
 //   constructor(private readonly tree: BinaryTree<TKey, TItem>) {}
 
 //   [Symbol.iterator]: () => {
-    
+
 //   }
 // }
