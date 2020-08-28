@@ -47,8 +47,6 @@ describe('Test BinaryTree insert implementation', () => {
     bt.insert(23);
     const result = bt.getElementsInOrder();
     const correctResult = [17, 18, 19, 20, 21, 22, 23];
-    expect([...result].map(item => item.key)).toEqual(
-      correctResult
-    );
+    expect([...result].map(item => item.key)).toEqual(correctResult);
   });
 });
