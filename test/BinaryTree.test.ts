@@ -34,4 +34,21 @@ describe('Test BinaryTree insert implementation', () => {
     expect(bt.root?.rightChild?.leftChild.key).toEqual(21);
     expect(bt.root?.rightChild?.rightChild.key).toEqual(23);
   });
+
+  it('Correct tree traversal in order', () => {
+    const compareFn = (a: number, b: number) => a - b;
+    const bt = new BinaryTree<number>(compareFn);
+    bt.insert(20);
+    bt.insert(18);
+    bt.insert(22);
+    bt.insert(17);
+    bt.insert(19);
+    bt.insert(21);
+    bt.insert(23);
+    const result = bt.getElementsInOrder();
+    const correctResult = [17, 18, 19, 20, 21, 22, 23];
+    expect([...result].map(item => item.key)).toEqual(
+      correctResult
+    );
+  });
 });
