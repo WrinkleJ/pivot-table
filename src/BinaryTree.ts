@@ -47,12 +47,23 @@ export class BinaryTree<TKey = string, TItem = {}> {
       }
     }
   }
+
+  getElementsInOrder(): Node<TItem, TKey>[] {
+    const items: Node<TItem, TKey>[] = [];
+    this.inOrder(this.root, (node: Node<TItem, TKey>) => {
+      items.push(node);
+    });
+    return items;
+  }
+
+  private inOrder(
+    node: Node<TItem, TKey>,
+    callback: (node: Node<TItem, TKey>) => void
+  ) {
+    if (node) {
+      this.inOrder(node.leftChild, callback);
+      callback(node);
+      this.inOrder(node.rightChild, callback);
+    }
+  }
 }
-
-// class BinaryTreeIteratorInOrder<TKey, TItem> {
-//   constructor(private readonly tree: BinaryTree<TKey, TItem>) {}
-
-//   [Symbol.iterator]: () => {
-
-//   }
-// }
